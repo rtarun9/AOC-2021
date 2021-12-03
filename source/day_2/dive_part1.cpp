@@ -1,7 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <utility>
+
+struct DepthInfo
+{
+    std::string direction;
+    int steps;
+};
 
 int main()
 {
@@ -12,14 +17,14 @@ int main()
         return 0;
     }
 
-    std::vector<std::pair<std::string, int>> path;
+    std::vector<DepthInfo> depthInfos;
     
     std::string direction;
     int steps;
 
     while (file >> direction >> steps)
     {
-        path.push_back(std::make_pair(direction, steps));
+        depthInfos.push_back({direction, steps});
     }
 
     struct Point
@@ -30,19 +35,19 @@ int main()
 
     Point destination = {};
 
-    for (const auto& dir : path)
+    for (const auto& depthInfo : depthInfos)
     {
-        if (dir.first == "forward")
+        if (depthInfo.direction == "forward")
         {
-            destination.x += dir.second;        
+            destination.x += depthInfo.steps;        
         }
-        else if (dir.first == "up")
+        else if (depthInfo.direction == "up")
         {
-            destination.y -= dir.second;
+            destination.y -= depthInfo.steps;
         }
-        else if (dir.first == "down")
+        else if (depthInfo.direction == "down")
         {
-            destination.y += dir.second;
+            destination.y += depthInfo.steps;
         }
     }
 

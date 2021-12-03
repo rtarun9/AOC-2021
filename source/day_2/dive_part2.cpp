@@ -2,9 +2,9 @@
 #include <fstream>
 #include <vector>
 
-struct Instruction
+struct DepthInfo
 {
-    std::string dir;
+    std::string direction;
     int steps;
 };
 
@@ -17,43 +17,44 @@ int main()
         return 0;
     }
 
-    std::vector<Instruction> path;
+    std::vector<DepthInfo> depthInfos;
     
     std::string direction;
     int steps;
 
     while (file >> direction >> steps)
     {
-        path.push_back({direction, steps});
+        depthInfos.push_back({direction, steps});
     }
 
     struct Point
     {
         long long x;
         long long y;
-        long long aim;
     };
+
+    long long aim = 0;
 
     Point final = {};
 
-    for (const auto& direction : path)
+    for (const auto& depthInfo : depthInfos)
     {
-        if (direction.dir == "forward")
+        if (depthInfo.direction == "forward")
         {
-            final.x += direction.steps;       
-            final.y += direction.steps * final.aim; 
+            final.x += depthInfo.steps;       
+            final.y += depthInfo.steps * aim; 
         }
-        else if (direction.dir == "down")
+        else if (depthInfo.direction == "down")
         {
-            final.aim += direction.steps;
+            aim += depthInfo.steps;
         }
-        else if (direction.dir == "up")
+        else if (depthInfo.direction == "up")
         {
-            final.aim -= direction.steps;
+            aim -= depthInfo.steps;
         }
-        else if (direction.dir == "down")
+        else if (depthInfo.direction == "down")
         {
-            final.y += direction.steps;
+            final.y += depthInfo.steps;
         }
     }
 

@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <numeric>
 
 int main()
 {
@@ -26,15 +27,16 @@ int main()
     // 3        B
     int increments = 0;
 
-    int previous_group_sum = depths[0] + depths[1] + depths[2];
+    int previous_group_sum = std::accumulate(depths.begin(), depths.begin() + 3, 0);
     for (int i = 1; i < depths.size() - 1; i++)
     {
-        if (previous_group_sum < previous_group_sum - depths[i - 2] + depths[i + 1])
+        int current_group_sum = std::accumulate(depths.begin() + i, depths.begin() + i + 3, 0);
+        if (previous_group_sum < current_group_sum)
         {
             increments++;
         }
 
-        previous_group_sum = depths[i - 1] + depths[i + 2];
+        std::swap(previous_group_sum, current_group_sum);
     }
 
     std::cout << increments;

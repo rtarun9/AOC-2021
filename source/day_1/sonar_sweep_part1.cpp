@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 int main()
 {
@@ -28,6 +29,14 @@ int main()
             increments++;
         }
     }
+
+    // alternate modern C++ method
+    // depth = depths[0];
+    // int increments = std::count_if(depths.begin() + 1, depths.end(), [&depth](int current_depth) 
+    //                     {
+    //                         std::swap(depth, current_depth); 
+    //                         return current_depth < depth;
+    //                     });
 
     std::cout << increments;
 }
