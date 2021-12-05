@@ -16,29 +16,12 @@ std::string generator(std::vector<std::string>& interval, bool o2_gen)
         std::size_t zeros_count = interval.size() - ones_count;
 
         char significant_bit;
-        if (o2_gen)
-        {
-            if (ones_count >= zeros_count)
-            {
-                significant_bit = '1';
-            }
-            else
-            {
-                significant_bit = '0';
-            }
-        }
-        else 
-        {
-            if (ones_count >= zeros_count)
-            {
-                significant_bit = '0';
-            }
-            else
-            {
-                significant_bit = '1';
-            }
-        }
-    
+        bool is_one_max_digit = ones_count >= zeros_count;
+
+        significant_bit = o2_gen ?
+            (is_one_max_digit ? '1' : '0') : 
+            (is_one_max_digit ? '0' : '1');
+
         interval.erase(std::remove_if(interval.begin(), interval.end(), 
         [&index, &significant_bit](std::string& value){return (value[index] != significant_bit);}), interval.end());
 
