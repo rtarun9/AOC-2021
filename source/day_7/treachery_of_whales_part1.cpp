@@ -11,7 +11,7 @@ int main()
         #include "input.txt"
     };
 
-    uint64_t minimum_cost = std::accumulate(positions.begin(), positions.end(), 0);
+    uint64_t minimum_cost = INT_MAX;
 
     for (int i = 0; i < positions.size(); i++)
     {
